@@ -9,12 +9,6 @@ namespace MovieMvcApi.Controllers
 {
     public class MovieController : Controller
     {
-        private readonly IHttpClientFactory _http;
-
-        public MovieController(IHttpClientFactory http)
-        {
-            _http = http;
-        }
 
         public IActionResult  Index()
         {

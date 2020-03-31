@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MovieMvcApi.Data;
 using MovieMvcApi.Models;
 
@@ -14,10 +17,10 @@ namespace MovieMvcApi.Service
             _context = context;
         }
 
-        public IEnumerable<MovieModel> GetAll() 
-        { 
-           var movies = _context.Movies.ToList();
-           return movies;
+
+        public IEnumerable<MovieModel> GetAll()
+        {
+            return _context.Movies.ToList();
         }
     }
 }

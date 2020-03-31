@@ -19,9 +19,9 @@ namespace MovieMvcApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<MovieModel> GetMovies()
+        public IActionResult GetMovies()
         {
-            return _movieService.GetAll();
+            return Ok(_movieService.GetAll());
         }
     }
 }

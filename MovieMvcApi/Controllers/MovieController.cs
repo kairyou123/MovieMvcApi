@@ -1,24 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MovieMvcApi.Models;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MovieMvcApi.Controllers
 {
     public class MovieController : Controller
     {
 
-        public IActionResult  Index()
+        public IActionResult Index()
         {
-            List<MovieModel> movies= new List<MovieModel>();  
             HttpClient client = new HttpClient();  
             var result = client.GetAsync("http://localhost:5000/api/MovieApi").Result;  
             if (result.IsSuccessStatusCode)  
             {  
-                movies = result.Content.ReadAsAsync<List<MovieModel>>().Result; 
-                return View("~/Views/Movie/Index.cshtml", movies);
+                var data  = result.Content.ReadAsStringAsync().Result; 
+                var mylist = JsonConvert.DeserializeObject<IEnumerable<MovieModel>>(data);
+                return View("~/Views/Movie/Index.cshtml", mylist);
             }  
             return NotFound();
             

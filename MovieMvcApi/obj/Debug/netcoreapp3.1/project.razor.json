@@ -20554,6 +20554,11 @@
       "FilePath": "d:\\Project\\Web\\ASP Core\\MovieMvcApi\\MovieMvcApi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Project\\Web\\ASP Core\\MovieMvcApi\\MovieMvcApi\\Views\\Movie\\Index.cshtml",
+      "TargetPath": "Views\\Movie\\Index.cshtml",
+      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"

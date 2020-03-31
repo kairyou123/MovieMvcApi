@@ -1,0 +1,14 @@
+@model List<MovieMvcApi.Models.MovieModel>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <table>
+    @foreach(var movie in Model) {
+        
+            <tr>
+                <td width="50%">Title: @movie.Title</td>
+                <td width="50%">Genre: @movie.Genre</td>
+            </tr>
+        
+    }
+    </table>
+</div>

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieMvcApi.Data;
+using MovieMvcApi.Models;
+using MovieMvcApi.Service;
 
 namespace MovieMvcApi
 {
@@ -22,6 +26,9 @@ namespace MovieMvcApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddDbContext<MovieContext> (options => options.UseSqlite("Data Source=Movies.db"));
             services.AddControllersWithViews();
         }
 
@@ -31,6 +38,7 @@ namespace MovieMvcApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                Seed(app);
             }
             else
             {
@@ -41,6 +49,7 @@ namespace MovieMvcApi
             app.UseRouting();
 
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -48,6 +57,32 @@ namespace MovieMvcApi
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void Seed(IApplicationBuilder app)
+        {
+            using(var serviceScope = app.ApplicationServices.CreateScope()) 
+            {
+                var context = serviceScope.ServiceProvider.GetService<MovieContext>();
+                if(!context.Movies.Any())
+                {
+
+                    var movies = new MovieModel[] 
+                    { 
+                        new MovieModel { Title = "Good for you", Genre = "Romance"},
+                        new MovieModel { Title = "Good for me", Genre = "Romance Comedy"},
+                    };
+
+                    foreach(MovieModel movie in movies)
+                    {
+                        context.Movies.Add(movie);
+                    }
+
+                    context.SaveChanges();
+                }
+
+                
+            }
         }
     }
 }
